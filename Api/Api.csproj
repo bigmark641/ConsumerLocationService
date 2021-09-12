@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LocationBusinessService\BusinessServices.csproj" />
-    <ProjectReference Include="..\LocationDataAccessServices\DataAccessServices.csproj" />
+    <ProjectReference Include="..\BusinessServices\BusinessServices.csproj" />
+    <ProjectReference Include="..\DataAccessServices\DataAccessServices.csproj" />
   </ItemGroup>
 
 </Project>
