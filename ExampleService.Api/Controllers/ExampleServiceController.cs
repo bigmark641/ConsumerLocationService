@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ExampleService.Api.RequestModels;
+using ExampleService.Api.ResponseModels;
+using ExampleService.Domain;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExampleService.Api.Controllers
 {
@@ -11,24 +9,22 @@ namespace ExampleService.Api.Controllers
     [Route("[controller]")]
     public class ExampleServiceController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly IExampleService _exampleService;
 
-        private readonly ILogger<ExampleServiceController> _logger;
-
-        public ExampleServiceController(ILogger<ExampleServiceController> logger)
+        public ExampleServiceController(IExampleService exampleService)
         {
-            _logger = logger;
+            _exampleService = exampleService;
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public GetStateResponse GetState(GetStateRequest request)
         {
-            var rng = new Random();
-            return new List<string> { "one", "two" }
-            .ToArray();
+            //Get location
+            var location = _exampleService.GetLocation(request.ZipCode);
+
+            //Create response
+            var response = new GetStateResponse(location.StateName);
+            return response;
         }
     }
 }
